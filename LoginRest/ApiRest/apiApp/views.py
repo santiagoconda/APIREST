@@ -18,13 +18,12 @@ def registro(request):
         token = Token.objects.create(user=user)
         return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_RQUEST)
-
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, username=request.data['usrename'])
+    user = get_object_or_404(User, username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response({'error': 'Invalid pasword'}, status=status.HTTP_401_UNAUTHORIZED)
     
     token, created = Token.objects.get_or_create(user=user)
-    serializer = userSerializer(istance=user)
+    serializer = userSerializer(instance=user)
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
