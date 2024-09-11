@@ -26,5 +26,5 @@ def login(request):
         return Response({'error': 'Invalid pasword'}, status=status.HTTP_401_UNAUTHORIZED)
     
     token, created = Token.objects.get_or_create(user=user)
-    serializer = userSerializer(istanec=user)
+    serializer = userSerializer(istance=user)
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
